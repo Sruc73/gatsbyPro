@@ -1,6 +1,8 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 
+import Img from "gatsby-image"
+
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -20,6 +22,7 @@ class BlogIndex extends React.Component {
           const title = node.frontmatter.title || node.fields.slug
           return (
             <div key={node.fields.slug}>
+              <Img fixed={node.frontmatter.image.childImageSharp.fixed} style={{float: 'left', marginRight: '16px'}} alt={title} />
               <h3
                 style={{
                   marginBottom: rhythm(1 / 4),
@@ -63,6 +66,13 @@ export const pageQuery = graphql`
             date(formatString: "MMMM DD, YYYY")
             title
             description
+            image {
+              childImageSharp {
+                fixed(width: 150, height: 150) {
+                  ... GatsbyImageSharpFixed_withWebp
+                }
+              }
+            }
           }
         }
       }
